@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   env: {
     BACKEND_URL: process.env.BACKEND_URL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   }
 };
 
