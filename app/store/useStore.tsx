@@ -7,5 +7,5 @@ interface FavoritesState {
 
 export const useStoreFavorites = create<FavoritesState>((set) => ({
   favorites: [],
-  set: (by) => set({ favorites: by })
+  set: (favorites) => set({ favorites })
 }));

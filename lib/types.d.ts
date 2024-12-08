@@ -13,6 +13,7 @@ export interface League {
   idVenue: string
 }
 export interface MatchInfoFetched {
+  id: string
   local_team: string
   local_team_img: string
   visitor_team: string

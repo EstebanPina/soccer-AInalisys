@@ -11,7 +11,8 @@ import { useStoreFavorites } from "@/app/store/useStore";
 const AppBar = () => {
   const { data: session } = useSession();
   console.log({ session });
-  const favorites = useStoreFavorites((state) => state.favorites).toString();
+  console.log(session?.backendTokens?.accessToken);
+  const favorites = useStoreFavorites((state) => state.favorites);
   const changeFavorites = useStoreFavorites((state) => state.set);
   useEffect(() => {
     if (session && session.user) {
@@ -19,14 +20,19 @@ const AppBar = () => {
     }
   }, [session]);
   const updateFavorites = async () => {
-    const response = await fetch("favorite/", {
+    console.log({ favorites });
+    const response = await fetch(`${process.env.BACKEND_URL}/favorite`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${session?.backendTokens?.accessToken}`,
       },
     });
     const data = await response.json();
-    changeFavorites(data);
+    console.log({ data });
+    changeFavorites(data.favorites);
+    console.log("Favorites updated");
+    console.log({ favorites });
   };
   return (
     <header className="flex gap-4 p-4 bg-gradient-to-b from-rich_black to-indigo-950 shadow sticky top-0 w-full">

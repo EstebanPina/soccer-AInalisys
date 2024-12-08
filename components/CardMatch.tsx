@@ -1,32 +1,53 @@
 'use client'
 import { League } from "@/lib/types";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import axios from "axios"; 
 import ModalPrediction from "./ModalPrediction";
 import { MatchInfoFetched } from "@/lib/types";
 import { useSession } from "next-auth/react";
-type Props = { match: League };
+import { useStoreFavorites } from "@/app/store/useStore";
+import { u } from "framer-motion/client";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+type Props = { match: League};
 
 export default function CardMatch({ match }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const [match_information, setMatchInformation] = useState<MatchInfoFetched | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false)
   const { data: session } = useSession();
   const isLogged = session && session.user;
+  const favorites = useStoreFavorites((state) => state.favorites);
+  const changeFavorites = useStoreFavorites((state) => state.set);
   const handleModal = () => {
     setIsOpen(true)
     handleFetchInformation()
     setIsLoading(true)
   }
   const handleAddFavorite = async () => {
+    setIsFavorite(true) 
     if (!isLogged) return;
     let response = await axios.get(`${process.env.BACKEND_URL}/user/add_favorite/${match.idEvent}`, {
         headers: {
           Authorization: `Bearer ${session?.backendTokens?.accessToken}`,
         },
       });
-    console.log(response.data)
+    changeFavorites(response.data.favorites)
+    handleFetchInformation()
+    setMatchInformation(null)
+    }
+  const handleRemoveFavorite = async () => {
+    setIsFavorite(false)
+    if (!isLogged) return;
+    let response = await axios.get(`${process.env.BACKEND_URL}/user/remove_favorite/${match.idEvent}`, {
+        headers: {
+          Authorization: `Bearer ${session?.backendTokens?.accessToken}`,
+        },
+      });
+      changeFavorites(response.data.favorites)        
+      handleFetchInformation()
+      setMatchInformation(null)
     }
 
   const handleFetchInformation = async () => {
@@ -46,13 +67,33 @@ export default function CardMatch({ match }: Props) {
     setIsOpen(false)
     setMatchInformation(null)
   }
+  const checkFavorite = () => {
+    if (!isLogged) return;
+    if (favorites.includes(match.idEvent)) {
+      setIsFavorite(true)
+    }
+  }
+  useEffect(() => {
+    checkFavorite()
+  }, [favorites])
+  
   return (
     <>
       <div
         key={match.idEvent}
         className="grid grid-cols-3 place-items-center w-4/5 gap-2 bg-gradient-to-b from-white/5 to-indigo-500/50 p-8 rounded-3xl "
       >
-        <div className="flex col-span-3 justify-end items-end w-full"><button type="button" onClick={handleAddFavorite}>add</button></div>
+        <div className="flex col-span-3 justify-end items-end w-full">
+          {
+            isLogged &&<>
+              {
+                isFavorite ?(<button type="button" onClick={handleRemoveFavorite}><FaHeart/></button>) : (<button type="button" onClick={handleAddFavorite}><FaRegHeart/></button>)
+              }
+              </>
+          }
+          
+          
+        </div>
         <div className="flex gap-4 flex-col">
           <img
             className="w-fit aspect-auto"
