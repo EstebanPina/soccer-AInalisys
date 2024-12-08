@@ -14,6 +14,7 @@ export interface League {
 }
 export interface MatchInfoFetched {
   id: string
+  id_sports_api: string
   local_team: string
   local_team_img: string
   visitor_team: string

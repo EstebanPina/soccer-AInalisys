@@ -44,7 +44,7 @@ const AppBar = () => {
         Spanish League
       </CustomLink>
       {session && session.user && (
-        <CustomLink className="transition-colors hover:text-blue-500" href={"/"}>
+        <CustomLink className="transition-colors hover:text-blue-500" href={"/favorites"}>
           My Favorites
         </CustomLink>
       )}

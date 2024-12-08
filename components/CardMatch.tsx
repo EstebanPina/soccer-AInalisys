@@ -76,6 +76,9 @@ export default function CardMatch({ match }: Props) {
   useEffect(() => {
     checkFavorite()
   }, [favorites])
+  useEffect(() => {
+    checkFavorite()
+  }, [])
   
   return (
     <>

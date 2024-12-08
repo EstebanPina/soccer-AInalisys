@@ -3,7 +3,7 @@ import { Button } from "@/components/Button";
 import InputBox from "@/components/InputBox";
 import Link from "next/link";
 import React, { useRef } from "react";
-
+import { useRouter } from "next/navigation";
 type FormInputs = {
   name: string;
   email: string;
@@ -11,6 +11,7 @@ type FormInputs = {
 };
 
 const SignupPage = () => {
+  const router = useRouter();
   const register = async () => {
     const res = await fetch(process.env.BACKEND_URL + "/auth/register", {
       method: "POST",
@@ -29,7 +30,7 @@ const SignupPage = () => {
     }
     const response = await res.json();
     alert("User Registered!");
-    console.log({ response });
+    router.push("/");
   };
   const data = useRef<FormInputs>({
     name: "",
@@ -37,10 +38,9 @@ const SignupPage = () => {
     password: "",
   });
   return (
-    <div className="m-2 border rounded overflow-hidden shadow">
-      <div className="p-2 bg-gradient-to-b from-white to-slate-200 text-slate-600">
-        Sign up
-      </div>
+    <main className="w-full flex flex-col justify-center items-center min-h-[80vh]">
+      <div className="w-full lg:w-3/4 bg-gradient-to-t from-indigo-600/20 to-white/10 p-8 rounded-3xl ">
+      <h2 className="text-4xl font-bold text-center mt-8 capitalize">Sign Up</h2>
       <div className="p-2 flex flex-col gap-6">
         <InputBox
           autoComplete="off"
@@ -69,7 +69,8 @@ const SignupPage = () => {
           </Link>
         </div>
       </div>
-    </div>
+      </div>
+    </main>
   );
 };
 
