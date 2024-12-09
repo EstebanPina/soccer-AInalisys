@@ -1,0 +1,104 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:881490111522:task-definition/soccer_ainalysis_frontend:2",
+    "containerDefinitions": [
+        {
+            "name": "soccer_ainalysis_front",
+            "image": "881490111522.dkr.ecr.us-east-1.amazonaws.com/soccer_ainalysis_frontend",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "soccer_ainalysis_front-3000-tcp",
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "NEXTAUTH_SECRET",
+                    "value": "6LTlIaLTQAmlz3GVfIlmOiSSRhT+g4XbPaPDeGQ0Mz3zesdL3sUNvuArumqykbNL5qoLRZeyzTWn34xkenHq2Q=="
+                },
+                {
+                    "name": "BACKEND_URL",
+                    "value": "http://balancersoccerainalysis-452617318.us-east-1.elb.amazonaws.com/api_soccer/v1"
+                }
+            ],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/soccer_ainalysis_frontend",
+                    "mode": "non-blocking",
+                    "awslogs-create-group": "true",
+                    "max-buffer-size": "25m",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            },
+            "systemControls": []
+        }
+    ],
+    "family": "soccer_ainalysis_frontend",
+    "taskRoleArn": "arn:aws:iam::881490111522:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::881490111522:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 2,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.28"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2024-12-09T21:25:40.156Z",
+    "registeredBy": "arn:aws:iam::881490111522:root",
+    "enableFaultInjection": false,
+    "tags": []
+}
