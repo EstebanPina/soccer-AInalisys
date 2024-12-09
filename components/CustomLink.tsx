@@ -7,7 +7,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   children: React.ReactNode;
 }
 
-export default function CustomLink({ href, children, ...props }: Props) {
+export default function CustomLink({ href, children }: Props) {
   return (
     <Link className={`${poppins.className} flex h-full p-4 font-bold text-xl uppercase italic hover:rounded-xl hover:bg-white/10 duration-150 hover:text-white`} href={href}>
       {children}

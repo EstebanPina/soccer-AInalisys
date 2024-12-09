@@ -5,7 +5,7 @@ import React from 'react'
 import { MatchInfoFetched } from '@/lib/types';
 import { CircleLoader } from 'react-spinners';
 
-type Props = {isOpen: boolean, isLoading:boolean, onClose: () => void, match_information: MatchInfoFetched}
+type Props = {isOpen: boolean, isLoading:boolean, onClose: () => void, match_information:  MatchInfoFetched | null}
 
 export default function ModalPrediction({isOpen,isLoading,onClose,match_information}: Props) {
   return (
@@ -38,7 +38,7 @@ export default function ModalPrediction({isOpen,isLoading,onClose,match_informat
               className="text-white"
             />
           </button>
-          {isLoading? <div className='flex flex-col h-72 justify-center items-center'><CircleLoader color='#fff' size={500} />Generating Prediction</div>:<>
+          {isLoading || match_information===null? <div className='flex flex-col h-72 justify-center items-center'><CircleLoader color='#fff' size={500} />Generating Prediction</div>:<>
           <h1 className="text-2xl font-bold">Match Prediction</h1>
           <div className="flex flex-col gap-4 w-3/4 ">
             <div className="grid grid-cols-3 place-items-center gap-2">

@@ -29,6 +29,7 @@ const SignupPage = () => {
       return;
     }
     const response = await res.json();
+    console.log({ response });
     alert("User Registered!");
     router.push("/");
   };

@@ -3,9 +3,9 @@ import CardMatch from "@/components/CardMatch"
 import { League } from "@/lib/types"
 export default async function Page({params,}: {  params: Promise<{ league_id: string }>;}) {
   const league_id = (await params).league_id;
-  let data = await fetch(`${process.env.BACKEND_URL}/sportsdb/league/${league_id}`)
-  let matches = await data.json()
-  let matches_data = matches.events || []
+  const data = await fetch(`${process.env.BACKEND_URL}/sportsdb/league/${league_id}`)
+  const matches = await data.json()
+  const matches_data = matches.events || []
   const slug = (await params).league_id;
   return (
     <div className="flex flex-col w-full items-center justify-center min-h-[80vh]">

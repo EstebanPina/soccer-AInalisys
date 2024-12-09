@@ -1,13 +1,11 @@
 'use client'
 import { League } from "@/lib/types";
-import Link from "next/link";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios"; 
 import ModalPrediction from "./ModalPrediction";
 import { MatchInfoFetched } from "@/lib/types";
 import { useSession } from "next-auth/react";
 import { useStoreFavorites } from "@/app/store/useStore";
-import { u } from "framer-motion/client";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 type Props = { match: League};
 
@@ -28,7 +26,7 @@ export default function CardMatch({ match }: Props) {
   const handleAddFavorite = async () => {
     setIsFavorite(true) 
     if (!isLogged) return;
-    let response = await axios.get(`${process.env.BACKEND_URL}/user/add_favorite/${match.idEvent}`, {
+    const response = await axios.get(`${process.env.BACKEND_URL}/user/add_favorite/${match.idEvent}`, {
         headers: {
           Authorization: `Bearer ${session?.backendTokens?.accessToken}`,
         },
@@ -40,7 +38,7 @@ export default function CardMatch({ match }: Props) {
   const handleRemoveFavorite = async () => {
     setIsFavorite(false)
     if (!isLogged) return;
-    let response = await axios.get(`${process.env.BACKEND_URL}/user/remove_favorite/${match.idEvent}`, {
+    const response = await axios.get(`${process.env.BACKEND_URL}/user/remove_favorite/${match.idEvent}`, {
         headers: {
           Authorization: `Bearer ${session?.backendTokens?.accessToken}`,
         },
@@ -51,7 +49,7 @@ export default function CardMatch({ match }: Props) {
     }
 
   const handleFetchInformation = async () => {
-    let response = await axios.post(`${process.env.BACKEND_URL}/soccer_matches/`, {
+    const response = await axios.post(`${process.env.BACKEND_URL}/soccer_matches/`, {
         id_sports_api: match.idEvent,
         local_team: match.strHomeTeam,
         visitor_team: match.strAwayTeam,

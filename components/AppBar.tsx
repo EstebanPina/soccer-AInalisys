@@ -10,8 +10,6 @@ import { useStoreFavorites } from "@/app/store/useStore";
 
 const AppBar = () => {
   const { data: session } = useSession();
-  console.log({ session });
-  console.log(session?.backendTokens?.accessToken);
   const favorites = useStoreFavorites((state) => state.favorites);
   const changeFavorites = useStoreFavorites((state) => state.set);
   useEffect(() => {

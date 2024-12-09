@@ -7,14 +7,12 @@ import { useStoreFavorites } from '../store/useStore';
 import { League, MatchInfoFetched } from '@/lib/types';
 
 
-type Props = {}
-
-export default function page({}: Props) {
+export default function Page() {
   const favorites=useStoreFavorites((state)=>state.favorites)
   console.log(favorites)
   const [matches, setMatches] = useState([])
   const fetch_data = async () => {
-    let response = await axios.post(`${process.env.BACKEND_URL}/soccer_matches/get_many/`, {
+    const response = await axios.post(`${process.env.BACKEND_URL}/soccer_matches/get_many/`, {
       favorites:favorites
     });
     setMatches(response.data.data)
